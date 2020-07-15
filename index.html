@@ -1,18 +1,36 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
-<div class="posts">
-  {% for post in site.posts %}
-    <article class="post">
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+    <title>Arcslash by arcslash</title>
+  </head>
 
-      <div class="entry">
-        {{ post.excerpt }}
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Arcslash</h1>
+        <h2>If Something I built broke something I didn&#39;t build, should surely find it in here.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/arcslash" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
       </div>
+    </header>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
-  {% endfor %}
-</div>
+    <div class="container">
+      <section id="main_content">
+        <h2>
+<a id="usual-stuff-here" class="anchor" href="#usual-stuff-here" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usual Stuff here</h2>
+      </section>
+    </div>
+
+    
+  </body>
+</html>

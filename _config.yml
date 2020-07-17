@@ -6,7 +6,7 @@
 name: Arcslash
 
 # Short bio or description (displayed in the header)
-description: If something I made broke something I didn't make you'll probably find it in here.
+description: If something I built broke something I didn't build you'll probably find it in here.
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://raw.githubusercontent.com/barryclark/jekyll-now/master/images/jekyll-logo.png
@@ -21,9 +21,9 @@ footer-links:
   email:
   facebook:
   flickr:
-  github: barryclark/jekyll-now
+  github: arcslash
   instagram:
-  linkedin:
+  linkedin: isharaux
   pinterest:
   rss: # just type anything here for a working RSS icon
   twitter: jekyllrb

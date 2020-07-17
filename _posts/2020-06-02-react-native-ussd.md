@@ -1,9 +1,12 @@
 ---
 title: USSD Handling for React Native
+subtitle: Run USSD in your react-native application
 published: true
 date: 2020-06-02 17:00
 category: development
 author: yeti
+cover-img: assets/img/2020-06-02-react-native-ussd/ussd_img.png
+share-img: assets/img/2020-06-02-react-native-ussd/ussd_img.png
 tags: [react-native, ussd]
 summary: react-native-ussd library usage and development
 ---

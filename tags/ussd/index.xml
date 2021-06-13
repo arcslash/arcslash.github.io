@@ -6,11 +6,12 @@
     <description>Recent content in ussd on Ishara Abeykoon</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://arcslash.com/tags/ussd/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 02 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://arcslash.com/tags/ussd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>USSD Handling for React Native</title>
       <link>https://arcslash.com/posts/2020-06-02-react-native-ussd/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://arcslash.com/posts/2020-06-02-react-native-ussd/</guid>
       <description>react-native-ussd library usage and development</description>

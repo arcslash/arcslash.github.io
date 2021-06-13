@@ -1,41 +1,37 @@
-<!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
-	<head>
-		<title> {{ .Site.Title }} </title>
+{{ define "head" }}
+	{{ if .Site.Params.bgImg -}}
+	<style>.bg-img {background-image: url('{{.Site.Params.bgImg}}');}</style>
+	{{- else if .Site.Params.images -}}
+		{{- range first 1 .Site.Params.images -}}
+		<style>.bg-img {background-image: url('{{. | absURL}}');}</style>
+		{{- end -}}
+	{{- end -}}
+{{ end }}
 
-		{{ partial "head.html" . }}
-
-	</head>
-	<body>
-		{{ partial "header.html" . }}
-		<div class="flex-wrapper">
-			<div class="container wrapper">
-				{{ with .Site.Params.ProfilePicture }}
-				<div class="row">
-					<div class="col-sm-3 col-centered">
-						<img alt="profile-picture" class="img-responsive img-circle user-picture center-block" src="{{.}}">
-					</div>
-				</div>
-				{{ end }}
-				<div class="row">
-					<div class="col-xs-12 user-profile text-center">
-						<h1 id="user-name">{{ .Site.Params.Name }}</h1>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 user-social text-center">
-					{{ partial "social.html" . }}
-					</div>
-				</div>
-				{{ with .Site.Params.About }}
-				<div class="row">
-					<div class="col-md-4 col-md-offset-4 user-description text-center">
-						<p>{{ . }}</p>
-					</div>
-				</div>
-				{{ end }}
+{{ define "main" }}
+	{{- if (or .Site.Params.images .Site.Params.bgImg) }}
+	<div class="bg-img"></div>
+	{{- end }}
+	<div id="spotlight" class="animated fadeIn">
+		<div id="home-center">
+			<h1 id="home-title">{{ .Site.Title }}</h1>
+			{{- with .Site.Params.homeSubtitle }}
+			<p id="home-subtitle">{{.}}</p>
+			{{- end }}
+			{{- with .Site.Params.social }}
+			<div id="home-social">
+				{{ partialCached "social-icons.html" . }}
 			</div>
-			{{ partial "footer.html" . }}
+			{{- end }}
+			<nav id="home-nav" class="site-nav">
+				{{ partialCached "menu.html" . }}
+			</nav>
 		</div>
-	</body>
-</html>
+		<div id="home-footer">
+			<p>
+				&copy; {{ now.Format "2006" }} <a href="{{ .Site.BaseURL }}">{{ .Site.Author.name }}</a>{{ .Site.Params.footerCopyright | safeHTML }}
+				{{- with (not (in (.Site.Language.Get "disableKinds") "RSS")) }} &#183; <a href="{{ "posts/index.xml" | absLangURL }}" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>{{ end }}
+			</p>
+		</div>
+	</div>
+{{ end }}

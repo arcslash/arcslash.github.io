@@ -1,103 +1,118 @@
-# Nix
+# Hugo theme Hermit
 
-Nix is a simple, minimal theme for Hugo
+[![Netlify Status](https://api.netlify.com/api/v1/badges/01a2e2de-d57d-4d89-8322-95685000e60f/deploy-status)](https://app.netlify.com/sites/hugo-theme-hermit/deploys)
 
-![Hugo Theme Nix](https://raw.githubusercontent.com/LordMathis/hugo-theme-nix/master/images/screenshot.png)
+Hermit is a minimal and fast theme for Hugo. It's built for bloggers who want a simple and focused website.
 
-## Usage
+![](https://github.com/Track3/hermit/raw/master/images/screenshot.png)
 
-Clone the repository to your hugo theme directory
+## Features
 
+* A single-column layout and carefully crafted typography offers a great reading experience.
+* Navigations and functions are placed in the bottom bar which will hide when you scroll down.
+* Featured image is supported. It will be displayed as a dimmed background of the page.
+* Displays all of your posts on a single page, with one section per year, simple and compact.
+* Extremely lightweight and load fast. No third party framework, no unnecessary code.
+* All code fields feature syntax highlighting and a code-copy function
+* Responsive & Retina Ready. Scales gracefully from a big screen all the way down to the smallest mobile phone. Assets in vector format ensures that it looks sharp on high-resolution screens.
+
+**[Theme Demo](https://hugo-theme-hermit.netlify.com/)** (uses contents and config from the `exampleSite` folder)
+
+![](https://github.com/Track3/hermit/raw/master/images/hermit.png)
+
+## Getting started
+
+### Installation
+
+Run this command from the root of your Hugo directory:
+
+```bash
+$ git clone https://github.com/Track3/hermit.git themes/hermit
 ```
-mkdir themes
-cd themes
-git clone https://github.com/LordMathis/hugo-theme-nix
+
+Or, if your Hugo site is already in git, you can include this repository as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules). This makes it easier to update this theme. For this you need to run:
+
+```bash
+$ git submodule add https://github.com/Track3/hermit.git themes/hermit
 ```
 
-## Configuration
+Alternatively, if you are not familiar with git, you can download the theme as a `.zip` file, unzip the theme contents, and then move the unzipped source into your `themes` directory.
 
-Add these parameters to your `config.toml`:
+For more information, read the official [documentation](https://gohugo.io/themes/installing-and-using-themes/) of Hugo.
 
+### Configuration
+
+The example config file can be found in the theme's `exampleSite` folder. You can just copy the `config.toml` to the root directory of your Hugo site. There are instructions in the example config file, feel free to change strings as you like to customize your website.
+
+#### Favicon
+
+Use [RealFaviconGenerator](https://realfavicongenerator.net/) to generate these files, put them into your site's `static` folder:
+
+* android-chrome-192x192.png
+* android-chrome-512x512.png
+* apple-touch-icon.png
+* favicon-16x16.png
+* favicon-32x32.png
+* favicon.ico
+* mstile-150x150.png
+* safari-pinned-tab.svg
+* site.webmanifest
+
+#### Social icons
+
+The following icons are supported, please make sure the `name` filed is exactly one of these:
+
+| name            |             |              |           |
+| --------------- | ----------- | ------------ | --------- |
+| `email`         | `codepen`   | `facebook`   | `github`  |
+| `gitlab`        | `instagram` | `linkedin`   | `slack`   |
+| `stackoverflow` | `telegram`  | `twitter`    | `youtube` |
+| `shutterstock`  | `freepik`   | `adobestock` | `123rf`   |
+| `dreamstime`    | `dribbble`  | `behance`    | `paypal`  |
+| `twitch`        | `qq`        |              |           |
+
+If that's not enough, you can see [Overriding templates](#overriding-templates) section.
+
+### Manage content
+
+* Keep your regular pages in the `content` folder. To create a new page, run `hugo new page-title.md`
+* Keep your blog posts in the `content/posts` folder. To create a new post, run `hugo new posts/post-title.md`
+
+### More customizations
+
+#### Overriding templates
+
+In Hugo, layouts can live in either the project’s (root) or the themes’ layout folders, any template inside the root layout folder will override theme's layout that relative to it, for example: `layouts/_default/baseof.html` will override `themes/hermit/layouts/_default/baseof.html`. So, you can easily customize the theme without edit it directly, which makes updating the theme easier. Here's some common customizations:
+
+##### Customize social icons
+You can modify or add any svg icons in site's `layouts/partials/svg.html`.
+
+##### Customize comment system
+We only have built-in support for Disqus at the moment, if that doesn't fit your needs, you can just add html to site's `layouts/partials/comments.html`.
+
+##### Add custom analytics
+If you prefer to use different analytics system other than google analytics, then add them inside `layouts/partials/analytics.html`.
+
+#### Customize CSS
+
+If you'd like to customize theme color or fonts, you can simply override `assets/scss/_predefined.scss`, by simply copy it to site's root (keep the same relative path) then edit those variables. But keep in mind, you'll need **Hugo extended version** which has the ability to rebuild SCSS. You don't have to use extended version in production but in this case it's necessary to make sure the `resources` folder is committed and "up to date" (by running `hugo` or `hugo server` locally using the extended version). But anyway, always use the extended version if you can.
+
+For adding other custom CSS to the theme, you can assign an array of references in `config.toml` like following:
 ```
 [params]
-  Name = "your_name"
-  HeaderUsername = "username"
-  HeaderHostname = "hostname"
-  About = "info_about_you"
-  ProfilePicture = "profile_picture_url"
+  customCSS = ["css/foo.css", "css/bar.css"]
 ```
+You may reference as many stylesheets as you want. Their paths need to be relative to the `static` folder or it can be a full URL for external resources.
 
-`HeaderUsername` and `HeaderHostname` will be displayed in navbar on left side in the format: `HeaderUsername@HeaderHostname ~ $`.  
+#### Code injection
 
-Optionaly you can add any of these social networks to the \[params\] section.
+You can inject any html code to every page's document head or right above the closing body tag. This makes it easier to add any html meta data, custom css/js, dns-prefetch etc. To do this you simply need to create a file at site's `layouts/partials/extra-head.html` or `layouts/partials/extra-foot.html`, code inside will be injected to every page.
 
-```
-  BitbucketID = "your_bitbucket_id"
-  CodepenID = "your_codepen"
-  CvURL = "your_cv_url"
-  Email = "your_email"
-  FacebookID = "your_facebook"
-  GithubID = "your_github"
-  GitlabId = "your_gitlab"
-  GnuPGFingerprint = "your_gpg_fingerprint"
-  GoogleAnalytics = "your_google_analytics_id"
-  GoogleplusID = "your_googleplus"
-  InstagramID = "your_instagram"
-  LinkedInID = "your_linkedin"
-  MastodonURL = "your_mastodon_profile"
-  MediumID = "your_medium_id"
-  Mobile = "+1-201-555-0123"
-  PayPalMeID = "https://www.paypal.me/..."
-  Phone = "+1-201-555-0123"
-  RedditID = "your_reddit"
-  SlackURL = "https://join.slack.com/..."
-  SpotifyID = "your_spotify_id"
-  SoundcloudID = "your_soundcloud_id"
-  StackExchangeID = "your_stackexchange_id"
-  StackOverflowID = "your_stackoverflow_id"
-  TelegramID = "your_telegram"
-  TwitterID = "your_twitter"
-  XingURL = "https://www.xing.com/profile/..."
-  # For youtube, since there are multiple path urls please add everything after https://youtube.com/ in channel url
-  YoutubeID = "c/your_youtube_id"
-```
+## Acknowledgments
 
-To add a menu item add `[[menu.header]]` item to `config.toml`. For example:
+* [normalize.css](https://necolas.github.io/normalize.css/) - [MIT](https://github.com/necolas/normalize.css/blob/master/LICENSE.md)
+* [animate.css](https://daneden.github.io/animate.css/) - [MIT](https://github.com/daneden/animate.css/blob/master/LICENSE)
+* [feather](https://feathericons.com/) - [MIT](https://github.com/feathericons/feather/blob/master/LICENSE)
+* [code-copy.js](assets/js/code-copy.js) - [Tom Spencer](https://www.fiznool.com/blog/2018/09/14/adding-click-to-copy-buttons-to-a-hugo-powered-blog/)
 
-```
-[menu]
-  [[menu.header]]
-    name = "posts"
-    weight = 0
-    url = "/posts"
-```
-
-To add a submenu item add `[[menu.header]]` item with a parent parameter to `config.toml`. For example:
-
-```
-[menu]
-  [[menu.header]]
-    identifier = "post"
-    name = "posts"
-    weight = 0
-  [[menu.header]]
-    parent = "post"
-    name = "All Posts"
-    url = "/posts"
-  [[menu.header]]
-    parent = "post"
-    name = "categories"
-    url = "/categories"
-  [[menu.header]]
-    parent = "post"
-    name = "tags"
-    url = "/tags"
-```
-
-To enable disqus comments add `disqusShortname` to your `config.toml`.
-
-You can turn off disqus comments per page by adding `nocomments = true` to the front matter.
-
-## License
-
-Nix is licensed under the [MIT License](LICENSE.md)
+Thanks!

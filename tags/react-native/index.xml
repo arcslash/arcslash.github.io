@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>react-native on Ishara Abeykoon</title>
+    <link>https://arcslash.com/tags/react-native/</link>
+    <description>Recent content in react-native on Ishara Abeykoon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://arcslash.com/tags/react-native/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>USSD Handling for React Native</title>
+      <link>https://arcslash.com/posts/2020-06-02-react-native-ussd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://arcslash.com/posts/2020-06-02-react-native-ussd/</guid>
+      <description>react-native-ussd library usage and development</description>
+    </item>
+    
+  </channel>
+</rss>

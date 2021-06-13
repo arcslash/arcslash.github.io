@@ -1446,5 +1446,98 @@ Liquid::Template.register_tag('image', Jekyll::ImageTag)
 ]]></content>
 		</item>
 		
+		<item>
+			<title>USSD Handling for React Native</title>
+			<link>https://arcslash.com/posts/2020-06-02-react-native-ussd/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://arcslash.com/posts/2020-06-02-react-native-ussd/</guid>
+			<description>react-native-ussd library usage and development</description>
+			<content type="html"><![CDATA[<p>I was in this current project recently which required functionality to to dial USSD codes to recharge/check balance as well as query telecom provider
+for some data, but react native doesn&rsquo;t have a library by default to access ussd functions.<a href="https://www.npmjs.com/package/react-native-ussd">react-native-ussd</a> is a library to address react native based ussd calls and listeners</p>
+<p>Unfortunately I couldn&rsquo;t find a way to read up USSD responses in IOS so the current solution will only be limited to android at this time.Although IOS USSD dialling functions will be added in the future releases of the react-native-ussd. (If anyone like to contribute please let me know as well :) )</p>
+<p>Basic Library use starts with adding user permissions to android manifest, which naturally need permission to make calls in order to continue</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest&gt;</span>
+<span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.CALL_PHONE&#34;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;application&gt;</span>
+</code></pre></div><p>Then the Ussd module and ussdEventEmitter should be imported and event listener should be added either as a hook(in functional components) or in component mount in class based components</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Functional Components
+</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Update the document title using the browser API
+</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">eventListener</span> <span class="o">=</span> <span class="nx">ussdEventEmitter</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;ussdEvent&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">ussdReply</span><span class="p">);</span>
+   <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Class Based Components
+</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+<span class="nx">componentDidMount</span><span class="p">(){</span>    
+    <span class="k">this</span><span class="p">.</span><span class="nx">eventListener</span> <span class="o">=</span> <span class="nx">ussdEventEmitter</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;ussdEvent&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">balance</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>Next the dialling can be done by dial method of Ussd module,Make sure to request for user permission at the runtime, better if this can be handled at app startup</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Functional Components
+</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">PermissionsAndroid</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
+<span class="kr">const</span> <span class="nx">dial</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;{</span>
+    <span class="kd">let</span> <span class="nx">granted</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">PermissionsAndroid</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span>
+      <span class="nx">PermissionsAndroid</span><span class="p">.</span><span class="nx">PERMISSIONS</span><span class="p">.</span><span class="nx">CALL_PHONE</span><span class="p">,</span>
+      <span class="p">{</span>
+        <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;I need to make some calls&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;Give me permission to make calls &#39;</span>
+      <span class="p">}</span>
+    <span class="p">)</span>
+  
+    <span class="k">if</span> <span class="p">(</span><span class="nx">granted</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&#34;CAN Make Calls&#34;</span> <span class="p">);</span>
+      <span class="nx">Ussd</span><span class="p">.</span><span class="nx">dial</span><span class="p">(</span><span class="s1">&#39;*#456#&#39;</span><span class="p">);</span><span class="c1">//add your dilaing code instead of *#456#
+</span><span class="c1"></span>    <span class="p">}</span> 
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&#34;CALL MAKING Permission Denied&#34;</span> <span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Class Based Components
+</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">PermissionsAndroid</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+<span class="kr">async</span> <span class="nx">dial</span><span class="p">(){</span>
+    <span class="kd">let</span> <span class="nx">granted</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">PermissionsAndroid</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span>
+      <span class="nx">PermissionsAndroid</span><span class="p">.</span><span class="nx">PERMISSIONS</span><span class="p">.</span><span class="nx">CALL_PHONE</span><span class="p">,</span>
+      <span class="p">{</span>
+        <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;I need to make some calls&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;Give me permission to make calls &#39;</span>
+      <span class="p">}</span>
+    <span class="p">)</span>
+  
+    <span class="k">if</span> <span class="p">(</span><span class="nx">granted</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&#34;CAN Make Calls&#34;</span> <span class="p">);</span>
+      <span class="nx">Ussd</span><span class="p">.</span><span class="nx">dial</span><span class="p">(</span><span class="s1">&#39;*#456#&#39;</span><span class="p">);</span>
+      
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">userBalance</span><span class="p">);</span>
+    <span class="p">}</span> 
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&#34;CALL MAKING Permission Denied&#34;</span> <span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>And that&rsquo;s done it should get USSD responses printed out to console for the dials made using the Ussd.dial() function.</p>
+]]></content>
+		</item>
+		
 	</channel>
 </rss>

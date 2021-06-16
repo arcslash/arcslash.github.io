@@ -10,13 +10,11 @@
     <lastBuildDate>Tue, 02 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://arcslash.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About Me</title>
-      <link>https://arcslash.com/about-hugo/</link>
+      <link>https://arcslash.com/about-me/</link>
       <pubDate>Sun, 13 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://arcslash.com/about-hugo/</guid>
-      <description>Developer Interested in developing new solutions and breaking things apart
-Find me at:
- https://github.com/arcslash  </description>
+      <guid>https://arcslash.com/about-me/</guid>
+      <description>Software Engineer with Love for Security</description>
     </item>
     
     <item>

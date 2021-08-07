@@ -20,11 +20,11 @@
 for some data, but react native doesn&rsquo;t have a library by default to access ussd functions.<a href="https://www.npmjs.com/package/react-native-ussd">react-native-ussd</a> is a library to address react native based ussd calls and listeners</p>
 <p>Unfortunately I couldn&rsquo;t find a way to read up USSD responses in IOS so the current solution will only be limited to android at this time.Although IOS USSD dialling functions will be added in the future releases of the react-native-ussd. (If anyone like to contribute please let me know as well :) )</p>
 <p>Basic Library use starts with adding user permissions to android manifest, which naturally need permission to make calls in order to continue</p>
-<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest&gt;</span>
 <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.CALL_PHONE&#34;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;application&gt;</span>
 </code></pre></div><p>Then the Ussd module and ussdEventEmitter should be imported and event listener should be added either as a hook(in functional components) or in component mount in class based components</p>
-<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Functional Components
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Functional Components
 </span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
 
@@ -36,7 +36,7 @@ for some data, but react native doesn&rsquo;t have a library by default to acces
    <span class="p">});</span>
   <span class="p">});</span>
 <span class="p">}</span>
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Class Based Components
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Class Based Components
 </span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
 
@@ -48,7 +48,7 @@ for some data, but react native doesn&rsquo;t have a library by default to acces
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><p>Next the dialling can be done by dial method of Ussd module,Make sure to request for user permission at the runtime, better if this can be handled at app startup</p>
-<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Functional Components
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Functional Components
 </span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span> <span class="nx">PermissionsAndroid</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
@@ -72,7 +72,7 @@ for some data, but react native doesn&rsquo;t have a library by default to acces
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Class Based Components
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Class Based Components
 </span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="p">{</span> <span class="nx">PermissionsAndroid</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>

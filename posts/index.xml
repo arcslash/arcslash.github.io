@@ -6,18 +6,18 @@
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Mon, 02 Aug 2021 00:00:00 +0000</lastBuildDate>
+		<lastBuildDate>Sat, 07 Aug 2021 00:00:00 +0000</lastBuildDate>
 		<atom:link href="https://arcslash.com/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
 			<title>Deploying Pretrained Custom Keras Model Using Amazon Sagemaker</title>
 			<link>https://arcslash.com/posts/2021-08-07-aws-sagemaker/</link>
-			<pubDate>Mon, 02 Aug 2021 00:00:00 +0000</pubDate>
+			<pubDate>Sat, 07 Aug 2021 00:00:00 +0000</pubDate>
 			
 			<guid>https://arcslash.com/posts/2021-08-07-aws-sagemaker/</guid>
 			<description>How to successfully deploy a custom machine learning model developed in keras to sagemaker for inference</description>
-			<content type="html"><![CDATA[<p>This guide may differ on differnet on the newest versions of sagemaker sdk and tensorflow at the time of writing latest
-tensorflow version is 2.5 and since only tensorflow 2.1.0 had solid support and compatability in deployments tensorflow 2.1.0 will be used in here.</p>
+			<content type="html"><![CDATA[<p>This guide may differ on different on the newest versions of sagemaker sdk and tensorflow at the time of writing the latest
+tensorflow version is 2.5 since only tensorflow 2.1.0 had solid support and compatability in deployments tensorflow 2.1.0 will be used in here.</p>
 <p>TL;DR:</p>
 <p>You can find the jupyter notebook related to this in <a href="https://colab.research.google.com/drive/1wRkxhViDGLob32VthovOFtLawTvsir0C?usp=sharing">here</a> which explains step by steps to follow</p>
 <h2 id="getting-things-ready---things-to-note">Getting Things Ready - Things to note</h2>
@@ -27,17 +27,17 @@ tensorflow version is 2.5 and since only tensorflow 2.1.0 had solid support and 
 <li>Sagemaker SDK 2.52.1</li>
 </ul>
 <h3 id="training-the-custom-model">Training the custom Model</h3>
-<p>Here in the notebook we&rsquo;ll use inbuilt functions in keras to simplify and easily carryout training.</p>
-<p>So in the applicationwise I will make a small classifier to identify cats and dogs.</p>
+<p>Here in the notebook, we&rsquo;ll use inbuilt functions in keras to simplify and easily carry out training.</p>
+<p>So, I will make a small classifier to identify cats and dogs.</p>
 <h4 id="dataset">Dataset</h4>
-<p>Usually the 1st thing I&rsquo;ll check is what data i have and in what format they are in, so as the 1st step in here. I&rsquo;ll be collecting data of different cats and dogs and will be adding them into two folders cat and dog seperately.</p>
+<p>Usually, the 1st thing I&rsquo;ll check is what data i have and in what format they are in, so as the 1st step in here. I&rsquo;ll be collecting data of different cats and dogs and will be adding them into two folders cat and dog separately.</p>
 <pre><code>.
 +-- notebook.ipynb
 +-- data/
 |   +-- train/
 |       +-- cat/
 |       +-- dog/
-</code></pre><p>Then we&rsquo;ll be loading these images using keras ImageDataGenerator. Here we can split data into training and validation sets using <code>validation_split</code> option in ImageDataGenerator of keras. I&rsquo;ll be seperating training and validation images as 80% and 20% respectively considering the images i have in the dataset. (<code>validation_split=0.2</code>)</p>
+</code></pre><p>Then we&rsquo;ll be loading these images using keras ImageDataGenerator. Here we can split data into training and validation sets using <code>validation_split</code> option in ImageDataGenerator of keras. I&rsquo;ll be separating training and validation images as 80% and 20% respectively. (<code>validation_split=0.2</code>)</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">train_datagen</span> <span class="o">=</span> ImageDataGenerator<span class="o">(</span><span class="nv">rescale</span><span class="o">=</span>1./255,
     <span class="nv">shear_range</span><span class="o">=</span>0.2,
     <span class="nv">horizontal_flip</span><span class="o">=</span>True,
@@ -56,9 +56,9 @@ tensorflow version is 2.5 and since only tensorflow 2.1.0 had solid support and 
                                           <span class="nv">batch_size</span> <span class="o">=</span>batch_size,
                                           <span class="nv">class_mode</span> <span class="o">=</span> <span class="s1">&#39;binary&#39;</span>,
                                                 <span class="nv">subset</span><span class="o">=</span><span class="s1">&#39;validation&#39;</span><span class="o">)</span>
-</code></pre></div><p>So now I have training and testing datasets seperated as 80% and 20% of whole data I have in my dataset. Now it&rsquo;s time to carryout training!</p>
+</code></pre></div><p>So now I have the training and testing datasets separated as 80% and 20% of the whole data I have in my dataset. Now it&rsquo;s time to carry out training!</p>
 <h4 id="model-selection-and-training">Model Selection and Training</h4>
-<p>For the simplicity sake I&rsquo;ll use an existing model within keras applications, but process will be similar in case you want to build your own model and trainup. You can find all the models that are available within keras applications and some sample useage of those in <a href="https://keras.io/api/applications/">here</a>. I&rsquo;ll be using VGG16 model in this example, why? well i think with the metrics provided in the keras applications table and size of the model will be totally enough in our usecase.</p>
+<p>For the simplicity sake I&rsquo;ll use an existing model within Keras applications, but process will be similar in case you want to build your own model and trainup. You can find all the models that are available within keras applications and some sample useage of those in <a href="https://keras.io/api/applications/">here</a>. I&rsquo;ll be using VGG16 model in this example, why? well I think with the metrics provided in the Keras applications table and size of the model will be enough in our use case.</p>
 <p>So we&rsquo;ll load up the model trained with imagenet weights using <code>tf.keras.applications.VGG16(include_top=False,weights=&quot;imagenet&quot;)</code> you can find more options in keras documentation which you can refer in <a href="https://keras.io/api/applications/vgg/#vgg16-function">here</a>.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">from tensorflow.keras.models import Model
 def make_model<span class="o">()</span>:
@@ -95,12 +95,12 @@ def make_model<span class="o">()</span>:
           <span class="nv">callbacks</span> <span class="o">=</span> callbacks
          <span class="o">)</span>
 model.save<span class="o">(</span>model_name<span class="o">)</span>
-</code></pre></div><p>Here you can use both <code>.h5 (HDF5)</code> format as well as <code>tensorflow SavedModel</code> format, but as for h5 format i came across problems in sagemaker deployment where eventhough the model was deployed to sagemaker <a href="https://stackoverflow.com/questions/68598991/keras-predictions-and-sagemaker-predictions-are-different/68612607#68612607">endpoint trained weights were&rsquo;t replected on the endpoint</a>. So I recommand to stick on to <code>tensorflow SavedModel</code> format.</p>
+</code></pre></div><p>Here you can use both <code>.h5 (HDF5)</code> format as well as <code>tensorflow SavedModel</code> format, but as for h5 format i came across problems in sagemaker deployment where eventhough the model was deployed to Sagemaker <a href="https://stackoverflow.com/questions/68598991/keras-predictions-and-sagemaker-predictions-are-different/68612607#68612607">endpoint trained weights were&rsquo;t reflected on the endpoint</a>. So I recommand to stick on to <code>tensorflow SavedModel</code> format.</p>
 <h2 id="loading-model">Loading Model</h2>
 <p>Load up the trained model giving the path where the saved model is stored in.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Load models from tensorflow saved model format</span>
 <span class="nv">model</span> <span class="o">=</span> keras.models.load_model<span class="o">(</span>saved_model_name<span class="o">)</span>
-</code></pre></div><p>convert tensorflow model to the format(<code>TF protobuf format</code>)  ready to be deployed in sagemaker.</p>
+</code></pre></div><p>convert Tensorflow model to the format(<code>TF protobuf format</code>)  ready to be deployed in Sagemaker.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">def convert_to_aws<span class="o">(</span>loaded_model<span class="o">)</span>:
     <span class="s2">&#34;&#34;&#34;
 </span><span class="s2">    given a pre-trained keras model, this function converts it to a TF protobuf format
@@ -143,7 +143,7 @@ model.save<span class="o">(</span>model_name<span class="o">)</span>
         archive.add<span class="o">(</span><span class="s1">&#39;export&#39;</span>, <span class="nv">recursive</span><span class="o">=</span>True<span class="o">)</span>
         
 convert_to_aws<span class="o">(</span>model<span class="o">)</span>
-</code></pre></div><p>Upload converted model to aws bucket.</p>
+</code></pre></div><p>Upload converted model to AWS bucket.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">import sagemaker
 
 <span class="nv">sagemaker_session</span> <span class="o">=</span> sagemaker.Session<span class="o">()</span>
@@ -151,7 +151,7 @@ convert_to_aws<span class="o">(</span>model<span class="o">)</span>
 
 <span class="c1"># View details of the uploaded bucket</span>
 print<span class="o">(</span>f<span class="s2">&#34;Bucket name is: {sagemaker_session.default_bucket()}&#34;</span><span class="o">)</span>
-</code></pre></div><p>Make a sagemaker Model. (This is what sagemaker endpoint will use to run inference on)</p>
+</code></pre></div><p>Make a Sagemaker Model. (This is what Sagemaker endpoint will use to run inference on)</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">!touch train.py <span class="c1">#create an empty python file</span>
 import boto3, re
 import tensorflow as tf
@@ -173,9 +173,9 @@ from sagemaker.tensorflow.model import TensorFlowModel
 <span class="nv">predictor</span> <span class="o">=</span> sagemaker_model.deploy<span class="o">(</span><span class="nv">initial_instance_count</span><span class="o">=</span>1, <span class="nv">instance_type</span><span class="o">=</span>deployement_instance_type<span class="o">)</span>
 <span class="nv">endpoint</span> <span class="o">=</span> predictor.endpoint
 
-</code></pre></div><p>Here <code>endpoint</code> will be the name of the endpoint which you can get from aws console as well.</p>
+</code></pre></div><p>Here <code>endpoint</code> will be the name of the endpoint which you can get from AWS console as well.</p>
 <h2 id="running-inference">Running Inference</h2>
-<p>Time to run some testing on deployed model. Here we can convert the image to a numpy array of correct shape to be sent into the final endpoint.</p>
+<p>Time to run some testing on the deployed model. Here we can convert the image to a numpy array of correct shape to be sent into the final endpoint.</p>
 <p>Note: <code> image = image.resize((224,224), Image.NEAREST)</code> by default keras preprocessing use nearest pixel from input image to do resizing where in Pillow library in default it use cubic interpolation on all pixels to resize image, inorder to keep both same use <code>Image.NEAREST</code> option in Pillow.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">import sagemaker
 from sagemaker.tensorflow.model import TensorFlowModel

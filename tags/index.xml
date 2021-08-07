@@ -9,11 +9,11 @@
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sat, 07 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://arcslash.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>amazon</title>
-      <link>https://arcslash.com/tags/amazon/</link>
+      <title>amazon-sagemaker</title>
+      <link>https://arcslash.com/tags/amazon-sagemaker/</link>
       <pubDate>Sat, 07 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://arcslash.com/tags/amazon/</guid>
+      <guid>https://arcslash.com/tags/amazon-sagemaker/</guid>
       <description></description>
     </item>
     
@@ -32,24 +32,6 @@
       <pubDate>Sat, 07 Aug 2021 00:00:00 +0000</pubDate>
       
       <guid>https://arcslash.com/tags/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>models</title>
-      <link>https://arcslash.com/tags/models/</link>
-      <pubDate>Sat, 07 Aug 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://arcslash.com/tags/models/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sagemaker</title>
-      <link>https://arcslash.com/tags/sagemaker/</link>
-      <pubDate>Sat, 07 Aug 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://arcslash.com/tags/sagemaker/</guid>
       <description></description>
     </item>
     

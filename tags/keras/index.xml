@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>keras on Ishara Abeykoon</title>
+    <link>https://arcslash.com/tags/keras/</link>
+    <description>Recent content in keras on Ishara Abeykoon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Mon, 02 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://arcslash.com/tags/keras/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deploying Pretrained Custom Keras Model Using Amazon Sagemaker</title>
+      <link>https://arcslash.com/posts/2021-08-07-aws-sagemaker/</link>
+      <pubDate>Mon, 02 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://arcslash.com/posts/2021-08-07-aws-sagemaker/</guid>
+      <description>How to successfully deploy a custom machine learning model developed in keras to sagemaker for inference</description>
+    </item>
+    
+  </channel>
+</rss>

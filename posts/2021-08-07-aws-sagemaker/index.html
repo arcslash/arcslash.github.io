@@ -1,35 +1,88 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Posts on Ishara Abeykoon</title>
-		<link>https://arcslash.com/posts/</link>
-		<description>Recent content in Posts on Ishara Abeykoon</description>
-		<generator>Hugo -- gohugo.io</generator>
-		<language>en-us</language>
-		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-		<lastBuildDate>Mon, 02 Aug 2021 00:00:00 +0000</lastBuildDate>
-		<atom:link href="https://arcslash.com/posts/index.xml" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>Deploying Pretrained Custom Keras Model Using Amazon Sagemaker</title>
-			<link>https://arcslash.com/posts/2021-08-07-aws-sagemaker/</link>
-			<pubDate>Mon, 02 Aug 2021 00:00:00 +0000</pubDate>
-			
-			<guid>https://arcslash.com/posts/2021-08-07-aws-sagemaker/</guid>
-			<description>How to successfully deploy a custom machine learning model developed in keras to sagemaker for inference</description>
-			<content type="html"><![CDATA[<p>This guide may differ on differnet on the newest versions of sagemaker sdk and tensorflow at the time of writing latest
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Deploying Pretrained Custom Keras Model Using Amazon Sagemaker">
+<meta itemprop="description" content="How to successfully deploy a custom machine learning model developed in keras to sagemaker for inference"><meta itemprop="datePublished" content="2021-08-02T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-08-02T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1170">
+<meta itemprop="keywords" content="machine-learning,amazon,sagemaker,models,tensorflow,keras," /><meta property="og:title" content="Deploying Pretrained Custom Keras Model Using Amazon Sagemaker" />
+<meta property="og:description" content="How to successfully deploy a custom machine learning model developed in keras to sagemaker for inference" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://arcslash.com/posts/2021-08-07-aws-sagemaker/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-02T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Deploying Pretrained Custom Keras Model Using Amazon Sagemaker"/>
+<meta name="twitter:description" content="How to successfully deploy a custom machine learning model developed in keras to sagemaker for inference"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Deploying Pretrained Custom Keras Model Using Amazon Sagemaker</title>
+	<link rel="stylesheet" href="https://arcslash.com/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://arcslash.com">Ishara Abeykoon</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://arcslash.com/posts/">Posts</a>
+				<a href="https://arcslash.com/about-me/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://twitter.com/isharaux" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://instagram.com/isharaupamal" target="_blank" rel="noopener me" title="Instagram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line></svg></a><a href="https://github.com/arcslash" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a><a href="" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://arcslash.com/posts/">Posts</a></li>
+			<li><a href="https://arcslash.com/about-me/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Aug 2, 2021</span></div>
+				<h1>Deploying Pretrained Custom Keras Model Using Amazon Sagemaker</h1>
+			</header>
+			<div class="content">
+				<p>This guide may differ on differnet on the newest versions of sagemaker sdk and tensorflow at the time of writing latest
 tensorflow version is 2.5 and since only tensorflow 2.1.0 had solid support and compatability in deployments tensorflow 2.1.0 will be used in here.</p>
 <p>TL;DR:</p>
 <p>You can find the jupyter notebook related to this in <a href="https://colab.research.google.com/drive/1wRkxhViDGLob32VthovOFtLawTvsir0C?usp=sharing">here</a> which explains step by steps to follow</p>
-<h2 id="getting-things-ready---things-to-note">Getting Things Ready - Things to note</h2>
-<h3 id="versions-in-use">Versions in use</h3>
+<h2 id="getting-things-ready---things-to-note">Getting Things Ready - Things to note<a href="#getting-things-ready---things-to-note" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="versions-in-use">Versions in use<a href="#versions-in-use" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <ul>
 <li>Tensorflow 2.1.0</li>
 <li>Sagemaker SDK 2.52.1</li>
 </ul>
-<h3 id="training-the-custom-model">Training the custom Model</h3>
+<h3 id="training-the-custom-model">Training the custom Model<a href="#training-the-custom-model" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>Here in the notebook we&rsquo;ll use inbuilt functions in keras to simplify and easily carryout training.</p>
 <p>So in the applicationwise I will make a small classifier to identify cats and dogs.</p>
-<h4 id="dataset">Dataset</h4>
+<h4 id="dataset">Dataset<a href="#dataset" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 <p>Usually the 1st thing I&rsquo;ll check is what data i have and in what format they are in, so as the 1st step in here. I&rsquo;ll be collecting data of different cats and dogs and will be adding them into two folders cat and dog seperately.</p>
 <pre><code>.
 +-- notebook.ipynb
@@ -57,7 +110,7 @@ tensorflow version is 2.5 and since only tensorflow 2.1.0 had solid support and 
                                           <span class="nv">class_mode</span> <span class="o">=</span> <span class="s1">&#39;binary&#39;</span>,
                                                 <span class="nv">subset</span><span class="o">=</span><span class="s1">&#39;validation&#39;</span><span class="o">)</span>
 </code></pre></div><p>So now I have training and testing datasets seperated as 80% and 20% of whole data I have in my dataset. Now it&rsquo;s time to carryout training!</p>
-<h4 id="model-selection-and-training">Model Selection and Training</h4>
+<h4 id="model-selection-and-training">Model Selection and Training<a href="#model-selection-and-training" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 <p>For the simplicity sake I&rsquo;ll use an existing model within keras applications, but process will be similar in case you want to build your own model and trainup. You can find all the models that are available within keras applications and some sample useage of those in <a href="https://keras.io/api/applications/">here</a>. I&rsquo;ll be using VGG16 model in this example, why? well i think with the metrics provided in the keras applications table and size of the model will be totally enough in our usecase.</p>
 <p>So we&rsquo;ll load up the model trained with imagenet weights using <code>tf.keras.applications.VGG16(include_top=False,weights=&quot;imagenet&quot;)</code> you can find more options in keras documentation which you can refer in <a href="https://keras.io/api/applications/vgg/#vgg16-function">here</a>.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">from tensorflow.keras.models import Model
@@ -96,7 +149,7 @@ def make_model<span class="o">()</span>:
          <span class="o">)</span>
 model.save<span class="o">(</span>model_name<span class="o">)</span>
 </code></pre></div><p>Here you can use both <code>.h5 (HDF5)</code> format as well as <code>tensorflow SavedModel</code> format, but as for h5 format i came across problems in sagemaker deployment where eventhough the model was deployed to sagemaker <a href="https://stackoverflow.com/questions/68598991/keras-predictions-and-sagemaker-predictions-are-different/68612607#68612607">endpoint trained weights were&rsquo;t replected on the endpoint</a>. So I recommand to stick on to <code>tensorflow SavedModel</code> format.</p>
-<h2 id="loading-model">Loading Model</h2>
+<h2 id="loading-model">Loading Model<a href="#loading-model" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>Load up the trained model giving the path where the saved model is stored in.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Load models from tensorflow saved model format</span>
 <span class="nv">model</span> <span class="o">=</span> keras.models.load_model<span class="o">(</span>saved_model_name<span class="o">)</span>
@@ -166,7 +219,7 @@ from sagemaker.tensorflow.model import TensorFlowModel
                                   <span class="nv">role</span> <span class="o">=</span> role,
                                   <span class="nv">framework_version</span> <span class="o">=</span> tf.__version__,
                                   <span class="nv">entry_point</span> <span class="o">=</span> <span class="s1">&#39;train.py&#39;</span><span class="o">)</span>
-</code></pre></div><h2 id="deploy-the-model">Deploy the model</h2>
+</code></pre></div><h2 id="deploy-the-model">Deploy the model<a href="#deploy-the-model" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>Here an endpoint will be deployed connected to sagemaker model made in earlier steps.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">deployement_instance_type</span> <span class="o">=</span> <span class="s2">&#34;ml.m4.xlarge&#34;</span>
 </code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Deploy a SageMaker to an endpoint</span>
@@ -174,7 +227,7 @@ from sagemaker.tensorflow.model import TensorFlowModel
 <span class="nv">endpoint</span> <span class="o">=</span> predictor.endpoint
 
 </code></pre></div><p>Here <code>endpoint</code> will be the name of the endpoint which you can get from aws console as well.</p>
-<h2 id="running-inference">Running Inference</h2>
+<h2 id="running-inference">Running Inference<a href="#running-inference" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>Time to run some testing on deployed model. Here we can convert the image to a numpy array of correct shape to be sent into the final endpoint.</p>
 <p>Note: <code> image = image.resize((224,224), Image.NEAREST)</code> by default keras preprocessing use nearest pixel from input image to do resizing where in Pillow library in default it use cubic interpolation on all pixels to resize image, inorder to keep both same use <code>Image.NEAREST</code> option in Pillow.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">import sagemaker
@@ -207,105 +260,43 @@ print<span class="o">(</span>f<span class="s2">&#34;Predictions from Sagemaker {
 <span class="c1">#actual keras Predictions</span>
 print<span class="o">(</span>f<span class="s2">&#34;Predictions from Keras {model.predict(data)}&#34;</span><span class="o">)</span>
 </code></pre></div><p>As for the results from both keras and sagemaker you should get exact same results. Enjoy!</p>
-<h1 id="references">References</h1>
+<h1 id="references">References<a href="#references" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h1>
 <ul>
 <li><a href="https://aws.amazon.com/blogs/machine-learning/deploy-trained-keras-or-tensorflow-models-using-amazon-sagemaker/">Deploy trained Keras or TensorFlow models using Amazon SageMaker</a></li>
 </ul>
-]]></content>
-		</item>
-		
-		<item>
-			<title>USSD Handling for React Native</title>
-			<link>https://arcslash.com/posts/2020-06-02-react-native-ussd/</link>
-			<pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
-			
-			<guid>https://arcslash.com/posts/2020-06-02-react-native-ussd/</guid>
-			<description>react-native-ussd library usage and development</description>
-			<content type="html"><![CDATA[<p>I was in this current project recently which required functionality to to dial USSD codes to recharge/check balance as well as query telecom provider
-for some data, but react native doesn&rsquo;t have a library by default to access ussd functions.<a href="https://www.npmjs.com/package/react-native-ussd">react-native-ussd</a> is a library to address react native based ussd calls and listeners</p>
-<p>Unfortunately I couldn&rsquo;t find a way to read up USSD responses in IOS so the current solution will only be limited to android at this time.Although IOS USSD dialling functions will be added in the future releases of the react-native-ussd. (If anyone like to contribute please let me know as well :) )</p>
-<p>Basic Library use starts with adding user permissions to android manifest, which naturally need permission to make calls in order to continue</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest&gt;</span>
-<span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.CALL_PHONE&#34;</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;application&gt;</span>
-</code></pre></div><p>Then the Ussd module and ussdEventEmitter should be imported and event listener should be added either as a hook(in functional components) or in component mount in class based components</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Functional Components
-</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
 
-<span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">useEffect</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="c1">// Update the document title using the browser API
-</span><span class="c1"></span>    <span class="kr">const</span> <span class="nx">eventListener</span> <span class="o">=</span> <span class="nx">ussdEventEmitter</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;ussdEvent&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">ussdReply</span><span class="p">);</span>
-   <span class="p">});</span>
-  <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Class Based Components
-</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>arcslash</p>
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://arcslash.com/tags/machine-learning">machine-learning</a></span><span class="tag"><a href="https://arcslash.com/tags/amazon">amazon</a></span><span class="tag"><a href="https://arcslash.com/tags/sagemaker">sagemaker</a></span><span class="tag"><a href="https://arcslash.com/tags/models">models</a></span><span class="tag"><a href="https://arcslash.com/tags/tensorflow">tensorflow</a></span><span class="tag"><a href="https://arcslash.com/tags/keras">keras</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1170 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2021-08-02 00:00 &#43;0000</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://arcslash.com/posts/2020-06-02-react-native-ussd/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>USSD Handling for React Native</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
 
-<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
-<span class="nx">componentDidMount</span><span class="p">(){</span>    
-    <span class="k">this</span><span class="p">.</span><span class="nx">eventListener</span> <span class="o">=</span> <span class="nx">ussdEventEmitter</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;ussdEvent&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">balance</span><span class="p">);</span>
-    <span class="p">});</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>Next the dialling can be done by dial method of Ussd module,Make sure to request for user permission at the runtime, better if this can be handled at app startup</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Functional Components
-</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">PermissionsAndroid</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://arcslash.com">arcslash</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://arcslash.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
 
-<span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">App</span><span class="p">()</span> <span class="p">{</span>
-<span class="kr">const</span> <span class="nx">dial</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="p">=&gt;{</span>
-    <span class="kd">let</span> <span class="nx">granted</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">PermissionsAndroid</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span>
-      <span class="nx">PermissionsAndroid</span><span class="p">.</span><span class="nx">PERMISSIONS</span><span class="p">.</span><span class="nx">CALL_PHONE</span><span class="p">,</span>
-      <span class="p">{</span>
-        <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;I need to make some calls&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;Give me permission to make calls &#39;</span>
-      <span class="p">}</span>
-    <span class="p">)</span>
-  
-    <span class="k">if</span> <span class="p">(</span><span class="nx">granted</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&#34;CAN Make Calls&#34;</span> <span class="p">);</span>
-      <span class="nx">Ussd</span><span class="p">.</span><span class="nx">dial</span><span class="p">(</span><span class="s1">&#39;*#456#&#39;</span><span class="p">);</span><span class="c1">//add your dilaing code instead of *#456#
-</span><span class="c1"></span>    <span class="p">}</span> 
-    <span class="k">else</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&#34;CALL MAKING Permission Denied&#34;</span> <span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="c1">//Class Based Components
-</span><span class="c1"></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">PermissionsAndroid</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">Ussd</span><span class="p">,</span> <span class="p">{</span><span class="nx">ussdEventEmitter</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-native-ussd&#39;</span><span class="p">;</span>
 
-<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
-<span class="kr">async</span> <span class="nx">dial</span><span class="p">(){</span>
-    <span class="kd">let</span> <span class="nx">granted</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">PermissionsAndroid</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span>
-      <span class="nx">PermissionsAndroid</span><span class="p">.</span><span class="nx">PERMISSIONS</span><span class="p">.</span><span class="nx">CALL_PHONE</span><span class="p">,</span>
-      <span class="p">{</span>
-        <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;I need to make some calls&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;message&#39;</span><span class="o">:</span> <span class="s1">&#39;Give me permission to make calls &#39;</span>
-      <span class="p">}</span>
-    <span class="p">)</span>
-  
-    <span class="k">if</span> <span class="p">(</span><span class="nx">granted</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&#34;CAN Make Calls&#34;</span> <span class="p">);</span>
-      <span class="nx">Ussd</span><span class="p">.</span><span class="nx">dial</span><span class="p">(</span><span class="s1">&#39;*#456#&#39;</span><span class="p">);</span>
-      
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">userBalance</span><span class="p">);</span>
-    <span class="p">}</span> 
-    <span class="k">else</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&#34;CALL MAKING Permission Denied&#34;</span> <span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>And that&rsquo;s done it should get USSD responses printed out to console for the dials made using the Ussd.dial() function.</p>
-]]></content>
-		</item>
-		
-	</channel>
-</rss>
+
+	<script src="https://arcslash.com/js/bundle.min.7d8545daa55d62427355498dd8da13f98ff79a7938ce7d2a5e2ae1ec0de3beb8.js" integrity="sha256-fYVF2qVdYkJzVUmN2NoT+Y/3mnk4zn0qXirh7A3jvrg=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>
